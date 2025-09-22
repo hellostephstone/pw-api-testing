@@ -2,8 +2,7 @@ import { test, expect } from '@playwright/test'
 
 let authToken: string
 
-test.beforeAll('run before all', async ({ request }) => {
-	// Get Token
+test.beforeAll('Get Token', async ({ request }) => {
 	const tokenResponse = await request.post('https://conduit-api.bondaracademy.com/api/users/login', {
 		data: { user: { email: 'pwtesttest1111@test.com', password: 'Welcome123' } },
 	})
@@ -11,7 +10,7 @@ test.beforeAll('run before all', async ({ request }) => {
 	authToken = 'Token ' + tokenResponseJSON.user.token
 })
 
-test('Get test tags', async ({ request }) => {
+test('Get Test Tags', async ({ request }) => {
 	const tagsResponse = await request.get('https://conduit-api.bondaracademy.com/api/tags')
 	const tagsResponseJSON = await tagsResponse.json()
 
@@ -101,7 +100,7 @@ test('Create, Update, and Delete Article', async ({ request }) => {
 			Authorization: authToken,
 		},
 	})
-  
+
 	const updateArticleResponseJSON = await updateArticleResponse.json()
 	expect(updateArticleResponse.status()).toEqual(200)
 	expect(updateArticleResponseJSON.article.title).toEqual('Test NEW Article Modified')
