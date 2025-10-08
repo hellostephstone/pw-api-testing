@@ -1,14 +1,11 @@
 import { test } from '../utils/fixtures'
 import { expect } from '../utils/custom-expect'
+import { createToken } from '../helpers/createToken'
 
 let authToken: string
 
 test.beforeAll('Get Token', async ({ api, config }) => {
-	const tokenResponse = await api
-		.path('/users/login')
-		.body({ user: { email: config.userEmail, password: config.userPassword } })
-		.postRequest(200)
-	authToken = 'Token ' + tokenResponse.user.token
+	authToken = await createToken(config.userEmail, config.userPassword)
 })
 
 test('Get Articles', async ({ api }) => {
