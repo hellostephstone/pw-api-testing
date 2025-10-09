@@ -1,6 +1,7 @@
 import { test } from '../utils/fixtures'
 import { expect } from '../utils/custom-expect'
 
+
 test('Get Articles', async ({ api }) => {
 	const response = await api.path('/articles').params({ limit: 10, offset: 0 }).getRequest(200)
 	expect(response.articles.length).shouldBeLessThanOrEqual(10)
