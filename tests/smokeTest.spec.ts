@@ -1,9 +1,9 @@
 import { test } from '../utils/fixtures'
 import { expect } from '../utils/custom-expect'
 
-
 test('Get Articles', async ({ api }) => {
 	const response = await api.path('/articles').params({ limit: 10, offset: 0 }).getRequest(200)
+	await expect(response).shouldMatchSchema('articles', 'GET_articles')
 	expect(response.articles.length).shouldBeLessThanOrEqual(10)
 	expect(response.articlesCount).shouldEqual(10)
 
@@ -14,6 +14,7 @@ test('Get Articles', async ({ api }) => {
 
 test('Get Test Tags', async ({ api }) => {
 	const response = await api.path('/tags').getRequest(200)
+	await expect(response).shouldMatchSchema('tags', 'GET_tags')
 	expect(response.tags[0]).shouldEqual('Test')
 	expect(response.tags.length).shouldBeLessThanOrEqual(10)
 })
@@ -30,7 +31,7 @@ test('Create and Delete Article', async ({ api }) => {
 			},
 		})
 		.postRequest(201)
-
+	await expect(createArticleResponse).shouldMatchSchema('articles', 'POST_articles')
 	expect(createArticleResponse.article.title).shouldEqual('Test TWO')
 	const slugId = createArticleResponse.article.slug
 

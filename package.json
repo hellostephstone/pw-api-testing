@@ -18,6 +18,9 @@
   "homepage": "https://github.com/hellostephstone/pw-api-testing#readme",
   "devDependencies": {
     "@playwright/test": "^1.55.0",
-    "@types/node": "^24.5.2"
+    "@types/node": "^24.5.2",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "genson-js": "^0.0.8"
   }
 }
