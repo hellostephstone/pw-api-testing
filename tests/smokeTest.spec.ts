@@ -1,5 +1,6 @@
 import { test } from '../utils/fixtures'
 import { expect } from '../utils/custom-expect'
+import articleRequestPayload from '../request-objects/POST-article.json'
 
 test('Get Articles', async ({ api }) => {
 	const response = await api.path('/articles').params({ limit: 10, offset: 0 }).getRequest(200)
@@ -20,35 +21,24 @@ test('Get Test Tags', async ({ api }) => {
 })
 
 test('Create and Delete Article', async ({ api }) => {
-	const createArticleResponse = await api
-		.path('/articles')
-		.body({
-			article: {
-				title: 'Test TWO',
-				description: 'Test Description',
-				body: 'Test Body',
-				tagList: [],
-			},
-		})
-		.postRequest(201)
+	const articleRequest = JSON.parse(JSON.stringify(articleRequestPayload))
+	articleRequest.article.title = 'This is an object title'
+	const createArticleResponse = await api.path('/articles').body(articleRequest).postRequest(201)
 	await expect(createArticleResponse).shouldMatchSchema('articles', 'POST_articles')
-	expect(createArticleResponse.article.title).shouldEqual('Test TWO')
+	expect(createArticleResponse.article.title).shouldEqual('This is an object title')
 	const slugId = createArticleResponse.article.slug
 
 	const articleResponse = await api.path('/articles').params({ limit: 10, offset: 0 }).getRequest(200)
-	expect(articleResponse.articles[0].title).shouldEqual('Test TWO')
+	expect(articleResponse.articles[0].title).shouldEqual('This is an object title')
 
 	await api.path(`/articles/${slugId}`).deleteRequest(204)
 
 	const articleResponseTwo = await api.path('/articles').params({ limit: 10, offset: 0 }).getRequest(200)
-	expect(articleResponseTwo.articles[0].title).not.shouldEqual('Test TWO')
+	expect(articleResponseTwo.articles[0].title).not.shouldEqual('This is an object title')
 })
 
 test('Create, Update, and Delete Article', async ({ api }) => {
-	const createArticleResponse = await api
-		.path('/articles')
-		.body({ article: { title: 'Test NEW Article', description: 'Test Description', body: 'Test Body', tagList: [] } })
-		.postRequest(201)
+	const createArticleResponse = await api.path('/articles').body(articleRequestPayload).postRequest(201)
 	expect(createArticleResponse.article.title).shouldEqual('Test NEW Article')
 	const slugId = createArticleResponse.article.slug
 
