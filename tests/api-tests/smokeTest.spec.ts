@@ -1,8 +1,8 @@
-import { test } from '../utils/fixtures'
-import { expect } from '../utils/custom-expect'
-import articleRequestPayload from '../request-objects/POST-article.json'
+import { test } from '../../utils/fixtures'
+import { expect } from '../../utils/custom-expect'
+import articleRequestPayload from '../../request-objects/POST-article.json'
 import { faker } from '@faker-js/faker'
-import { getNewRandomArticle } from '../utils/data-generator'
+import { getNewRandomArticle } from '../../utils/data-generator'
 
 test('Get Articles', async ({ api }) => {
 	const response = await api.path('/articles').params({ limit: 10, offset: 0 }).getRequest(200)

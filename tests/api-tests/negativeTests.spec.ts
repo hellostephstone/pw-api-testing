@@ -1,5 +1,5 @@
-import { test } from '../utils/fixtures'
-import { expect } from '../utils/custom-expect'
+import { test } from '../../utils/fixtures'
+import { expect } from '../../utils/custom-expect'
 ;[
 	{ username: 'dd', usernameErrorMessage: 'is too short (minimum is 3 characters)' },
 	{ username: 'ddd', usernameErrorMessage: '' },
