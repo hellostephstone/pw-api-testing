@@ -10,6 +10,15 @@ test.beforeAll('Get Token', async ({ request }) => {
 	authToken = 'Token ' + tokenResponseJSON.user.token
 })
 
+test('Delete Article', async ({ request }) => {
+	const deleteArticleResponse = await request.delete('https://conduit-api.bondaracademy.com/api/articles/slug', {
+		headers: {
+			Authorization: authToken,
+		},
+	})
+	expect(deleteArticleResponse.status()).toEqual(204)
+})
+
 test('Get Test Tags', async ({ request }) => {
 	const tagsResponse = await request.get('https://conduit-api.bondaracademy.com/api/tags')
 	const tagsResponseJSON = await tagsResponse.json()
